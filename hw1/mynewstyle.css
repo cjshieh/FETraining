@@ -10,12 +10,13 @@ body {
   background-size: cover;
   background-attachment: fixed;
   background: url(bg-default.jpg);
+  /* opacity: 0.5; */
 }
 
 .container {
   display: flex;
   justify-content: center;
-  background-color: black 0.5;
+  background-color: rgba(0,0,0,0.5);
 }
 
 .element-grid {
