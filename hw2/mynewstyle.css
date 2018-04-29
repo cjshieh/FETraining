@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+  background: url(bg-default.jpg);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.element-grid {
+  width: 1200px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.outer {
+  width: 300px;
+  margin: 10px;
+  border: 1px solid gray;
+}
+
+.inner {
+  width: 300px;
+}
+
+#channel {
+  max-width: 300px;
+  display: block;
+  /* https://stackoverflow.com/questions/3947113/space-between-div-and-img */
+}
+
+.down {
+  display: flex;
+  justify-content: flex-start;
+  background-color: black;
+}
+
+.avtar {
+  width: 60px;
+  height: 60px;
+  margin: 10px 10px;
+}
+
+img#person {
+  height: 60px;
+  width: 60px;
+  border-radius: 40px;
+}
+
+.content {
+  margin-left: 10px;
+}
+.channelname {
+  margin-top: 10px;
+}
+
+.username {
+  margin-top: 10px;
+}
+
+p {
+  color: gray;
+  /* white-space: nowrap; */
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
