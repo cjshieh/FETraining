@@ -15,7 +15,7 @@ body {
 .container {
   display: flex;
   justify-content: center;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .element-grid {
@@ -29,6 +29,16 @@ body {
   width: 300px;
   margin: 10px;
   border: 1px solid gray;
+  /* box-shadow: 0px 0px;
+  filter: contrast(100%); */
+  transition: box-shadow 0.5s ease-in, filter 0.5s ease-in, background 0.5s ease-in;
+}
+
+.outer:hover {
+  box-shadow: 10px 5px 5px rgba(83, 74, 74, 0.5);
+  filter: brightness(150%);
+  /* For SelfPrac Q2: after hover 1s, trigger transition */
+  transition-delay: 1s;
 }
 
 .inner {
