@@ -1,33 +1,13 @@
-## Hw2
+## Hw3
 
 ### Goal
 
-Add animation while hovering each channel
+Refactor the existing css with css-preprocessor
 
 ### Approach
 
-Just add `transition: <property> <duration> <timing-function>` in the target element.
+I choose stylus to do this homework. 
 
-so the final CSS will be
-``` css
-.outer {
+**Reason for using css-preprocessor**
 
- transition: box-shadow 0.5s ease-in, filter 0.5s ease-in;
-}
-
-.outer:hover {
-  box-shadow: 10px 5px 5px rgba(83, 74, 74, 0.5);
-  filter: brightness(150%);
-```
-
-More about [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow) and [filter](https://css-tricks.com/almanac/properties/f/filter/)
-
-### Extra self practice question:
-
-1. If we want to trigger transition after hovering for 1 sec, how do we do?
-
-    add `transition-delay: 1s` in `.outer:hover`
-
-1. Why do we need to avoid using `transition: all`? 
-
-    For performance issue, we just need to choose which property to do transition.
+If the project grows, we will be benefit from css-preprocessor, i.e define the common width or height seetings or using function to add prefixs for CSS3
