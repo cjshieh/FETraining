@@ -1,3 +1,11 @@
+$elements-grid-width = 1200px
+
+$element-width = 300px
+
+filter()
+  -webkit-filter: arguments
+  filter: arguments
+
 * 
   margin: 0;
   padding: 0;
@@ -19,14 +27,14 @@ body
 
 
 .element-grid 
-  width: 1200px;
+  width: $elements-grid-width;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 
 
 .outer 
-  width: 300px;
+  width: $element-width;
   margin: 10px;
   border: 1px solid gray;
   /* box-shadow: 0px 0px;
@@ -36,16 +44,11 @@ body
   &:hover 
     box-shadow: 10px 5px 5px rgba(83, 74, 74, 0.5);
     filter: brightness(150%);
-    /* For SelfPrac Q2: after hover 1s, trigger transition */
-    transition-delay: 1s;
-
-
-.inner 
-  width: 300px;
-
+    /* For SelfPrac hw2 Q2: after hover 1s, trigger transition */
+    // transition-delay: 1s;
 
 #channel 
-  max-width: 300px;
+  max-width: $element-width;
   display: block;
   /* https://stackoverflow.com/questions/3947113/space-between-div-and-img */
 
@@ -55,19 +58,11 @@ body
   justify-content: flex-start;
   background-color: black;
 
-
-.avtar 
-  width: 60px;
-  height: 60px;
-  margin: 10px 10px;
-
-
-
 #person 
   height: 60px;
   width: 60px;
   border-radius: 40px;
-
+  margin: 10px 10px;
 
 .content 
   margin-left: 10px;
@@ -75,10 +70,8 @@ body
 .channelname 
   margin-top: 10px;
 
-
 .username 
   margin-top: 10px;
-
 
 p 
   color: gray;
@@ -86,4 +79,3 @@ p
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
-
