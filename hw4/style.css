@@ -35,6 +35,11 @@ body {
   filter: brightness(150%);
 /* For SelfPrac hw2 Q2: after hover 1s, trigger transition */
 }
+.element.padding {
+  border: none;
+  transition: none;
+  box-shadow: none;
+}
 #channel {
   max-width: 300px;
   display: block;
