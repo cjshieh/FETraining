@@ -55,6 +55,7 @@ body
 #channel 
   max-width: $element-width;
   display: block;
+  
   /* https://stackoverflow.com/questions/3947113/space-between-div-and-img */
 
 
@@ -72,8 +73,11 @@ body
 .content 
   margin-left: 10px;
 
-.channelname 
+.channelname
   margin-top: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 
 .username 
   margin-top: 10px;

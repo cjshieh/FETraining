@@ -1,7 +1,7 @@
 // console.log("Hello World");
 
 const container = document.querySelector(".elements-grid");
-const thumbnailSize = `800x600`;
+const thumbnailSize = "320x180";
 const listsOfStream = {};
 
 async function getUsersInfo(usersId) {
@@ -19,7 +19,7 @@ async function getUsersInfo(usersId) {
   const requestUser = new Request(encodeURI(streamUrl), requestOptions);
   const listsOfUsers = await fetch(requestUser);
 
-  return listsOfUsers.json()
+  return listsOfUsers.json();
 }
 
 async function getStreams() {
@@ -38,23 +38,51 @@ async function getStreams() {
   const streams = await listsOfStreams.json();
 
   const idLists = streams.data.map(stream => {
-    return `id=${stream.user_id}`; 
+    return `id=${stream.user_id}`;
   });
-  const userLists = await getUsersInfo(idLists.join("&")).then(response => response.data);
+  const userLists = await getUsersInfo(idLists.join("&")).then(
+    response => response.data
+  );
   const userListsMap = new Map();
   userLists.forEach(user => {
-      userListsMap.set(user.id, user);
+    userListsMap.set(user.id, user);
   });
   // combine step
   streams.data.map(stream => {
-      const tmp = {};
-      tmp["user_name"] = userListsMap.get(stream.user_id)["display_name"];
-      tmp["user_img"] = userListsMap.get(stream.user_id)["profile_image_url"];
-      tmp["title"] = stream["title"];
-      tmp["thumbnail"] = stream["thumbnail_url"].replace(/({width})x({height})/i, `${thumbnailSize}`);
-      lists.push(tmp);
+    const tmp = {};
+    tmp["user_name"] = userListsMap.get(stream.user_id)["display_name"];
+    tmp["user_img"] = userListsMap.get(stream.user_id)["profile_image_url"];
+    tmp["title"] = stream["title"];
+    tmp["thumbnail"] = stream["thumbnail_url"].replace(
+      /({width})x({height})/i,
+      `${thumbnailSize}`
+    );
+    lists.push(tmp);
   });
+  console.log(lists);
   return lists;
 }
 
-getStreams();
+function handleRequest(response) {
+  response.forEach(stream => {
+    const innerHTML = 
+    `<div class="element">
+      <div class="upper">
+        <img id="channel" src=${stream.thumbnail} alt="" />
+      </div>
+      <div class="down">
+        <div class="avtar">
+          <img id="person" src=${stream.user_img}>
+        </div>
+        <div class="content">
+          <p class="channelname">${stream.title}</p>
+          <p class="username">${stream.user_name}</p>
+        </div>
+      </div>
+    </div>`;
+    container.insertAdjacentHTML('beforeend', innerHTML); 
+  });
+  container.insertAdjacentHTML('beforeend','<div class="element padding"></div>');
+}
+
+getStreams().then(handleRequest);
