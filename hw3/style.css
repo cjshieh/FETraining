@@ -15,13 +15,13 @@ body {
   justify-content: center;
   background-color: rgba(0,0,0,0.5);
 }
-.element-grid {
+.elements-grid {
   width: 1200px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
-.outer {
+.element {
   width: 300px;
   margin: 10px;
   border: 1px solid #808080;
@@ -29,7 +29,7 @@ body {
   filter: contrast(100%); */
   transition: box-shadow 0.5s ease-in, filter 0.5s ease-in;
 }
-.outer:hover {
+.element:hover {
   box-shadow: 10px 5px 5px rgba(83,74,74,0.5);
   -webkit-filter: brightness(150%);
   filter: brightness(150%);
