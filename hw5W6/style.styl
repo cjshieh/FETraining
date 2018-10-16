@@ -20,7 +20,8 @@ body
   background: url(bg-default.jpg);
 
 
-.container 
+.container
+  height: auto;
   display: flex;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
@@ -61,17 +62,54 @@ body
 .upper
   height: 180px;
   width: 320px;
+  position: relative;
+
+  img
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+
+.upper::before
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(live.jpg);
 
 .down 
   display: flex;
   justify-content: flex-start;
   background-color: black;
 
-#person 
+.avtar
   height: 60px;
   width: 60px;
+  margin: 10px;
+  position: relative;
+
+  img
+    height: 60px;
+    width: 60px;
+    border-radius: 40px;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+
+.avtar::before
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(fate.jpeg);
   border-radius: 40px;
-  margin: 10px 10px;
+
+.avtar.hide::before
+  content: '';
+  background: none;
 
 .content 
   margin-left: 10px;

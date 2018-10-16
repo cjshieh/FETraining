@@ -61,23 +61,30 @@ async function getStreams() {
   return lists;
 }
 
+function toggleImg(that) {
+  that.style.opacity = 1;
+  that.parentNode.classList.toggle("hide");
+}
+
 function handleRequest(response) {
   response.forEach(stream => {
     const innerHTML = 
-    `<div class="element">
+    `
+    <div class="element">
       <div class="upper">
-        <img id="channel" src=${stream.thumbnail} alt="" />
+        <img id="channel" src=${stream.thumbnail} alt="" onload="this.style.opacity=1"/>
       </div>
       <div class="down">
         <div class="avtar">
-          <img id="person" src=${stream.user_img}>
+          <img class="person" src=${stream.user_img} onload="toggleImg(this)">
         </div>
         <div class="content">
           <p class="channelname">${stream.title}</p>
           <p class="username">${stream.user_name}</p>
         </div>
       </div>
-    </div>`;
+    </div>
+    `;
     container.insertAdjacentHTML('beforeend', innerHTML); 
   });
   container.insertAdjacentHTML('beforeend','<div class="element padding"></div>');
