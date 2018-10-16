@@ -22,7 +22,7 @@ body {
   flex-wrap: wrap;
 }
 .element {
-  width: 300px;
+  width: 320px;
   margin: 10px;
   border: 1px solid #808080;
 /* box-shadow: 0px 0px;
@@ -41,9 +41,13 @@ body {
   box-shadow: none;
 }
 #channel {
-  max-width: 300px;
+  max-width: 320px;
   display: block;
 /* https://stackoverflow.com/questions/3947113/space-between-div-and-img */
+}
+.upper {
+  height: 180px;
+  width: 320px;
 }
 .down {
   display: flex;

@@ -2,7 +2,6 @@
 
 const container = document.querySelector(".elements-grid");
 const thumbnailSize = "320x180";
-const listsOfStream = {};
 
 async function getUsersInfo(usersId) {
   if (usersId.length < 1) {
@@ -59,7 +58,6 @@ async function getStreams() {
     );
     lists.push(tmp);
   });
-  console.log(lists);
   return lists;
 }
 
