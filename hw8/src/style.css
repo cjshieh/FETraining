@@ -62,7 +62,7 @@ body {
   transition: none;
   box-shadow: none;
 }
-#channel {
+.channel {
   max-width: 320px;
   display: block;
 /* https://stackoverflow.com/questions/3947113/space-between-div-and-img */
@@ -137,4 +137,8 @@ p {
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.category a:hover {
+  color: lightblue;
 }

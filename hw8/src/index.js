@@ -1,4 +1,14 @@
 // console.log("Hello World");
+import _ from 'lodash';
+import EN from './lang-en';
+import ZHTW from './lang-zh-tw';
+import './style.css';
+import './spinner.css';
+
+const I18N = {
+  'en': EN,
+  'zh-tw': ZHTW
+}
 
 const container = document.querySelector(".elements-grid");
 const menu = document.querySelector(".menu");
@@ -8,9 +18,10 @@ let nextPageEncode = "";
 let isLoading = false;
 let LANG = "zh-tw";
 
-function changeLang(lang) {
+function changeLang(e) {
+  const lang = e.target.dataset.lang;
   const header = document.querySelector(".menu h1");
-  header.textContent = window.I18N[lang]["TITLE"];
+  header.textContent = I18N[lang]["TITLE"];
   LANG = lang;
   container.innerHTML = `
   <div id="spinner-content">
@@ -40,7 +51,6 @@ async function getStreams(nextPageStr = "") {
     listsOfStreams = await fetch(requestStream);
   } catch (err) {
     console.err("fetch failed", err);
-    // return;
   }
   const streams = await listsOfStreams.json();
   // store pagination
@@ -94,28 +104,23 @@ function handleRequest(response) {
     const innerHTML = `
     <div class="element">
       <div class="upper">
-        <img id="channel" src=${
+        <img class="channel" src=${
           stream.thumbnail
-        } alt="" onload="this.style.opacity=1"/>
+        } alt="" />
       </div>
       <div class="down">
         <div class="avtar">
-          <img class="person" src=${stream.user_img} onload="toggleImg(this)">
+          <img class="person" src=${stream.user_img}>
         </div>
         <div class="content">
           <p class="channelname">${stream.title}</p>
           <p class="username">${stream.user_name}</p>
         </div>
       </div>
-    </div>
-    `;
+    </div>`;
     container.insertAdjacentHTML("beforeend", innerHTML);
   });
-  menu.style.display = "flex";
-  spinner.style.display = "none";
-  const spinnerContent = document.querySelector("#spinner-content");
-  if(spinnerContent)
-    spinnerContent.style.display='none'
+  toggleVisibility();
   isLoading = false;
 }
 
@@ -129,9 +134,23 @@ function onScroll() {
   }
 }
 
-function toggleImg(that) {
-  that.style.opacity = 1;
-  that.parentNode.classList.toggle("hide");
+function toggleImg(e) {
+  const that = e.target;
+  if(that.className === 'person') {
+    that.style.opacity = 1;
+    that.parentNode.classList.toggle("hide");
+  }else if( that.className === 'channel') {
+    that.style.opacity = 1;
+  }
+}
+
+function toggleVisibility() {
+  menu.style.display = "flex";
+  spinner.style.display = "none";
+  const spinnerContent = document.querySelector("#spinner-content");
+  if(spinnerContent) {
+    spinnerContent.style.display='none';
+  }
 }
 
 // first load
@@ -139,3 +158,11 @@ getStreams().then(handleRequest);
 
 // load more
 window.addEventListener("scroll", _.debounce(onScroll, 500));
+
+// change language event
+Array.from(document.querySelectorAll(".category a"))
+  .forEach(link => {
+    link.addEventListener("click", changeLang)});
+
+// capturing any onload event
+document.body.addEventListener('load', toggleImg, true);
