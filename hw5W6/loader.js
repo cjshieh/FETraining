@@ -1,27 +1,28 @@
 // console.log("Hello World");
 
 const container = document.querySelector(".elements-grid");
-const thumbnailSize = "320x180";
+const thumbnailSize = "620x310";
+let nextPageEncode = '';
+let isLoading = false;
+let curStreams = 0;
 
-async function getUsersInfo(usersId) {
-  if (usersId.length < 1) {
-    return;
-  }
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Client-ID": "1pad2r1f4sf4viku4n5ss733prh1sm",
-      "Content-Type": "application/json"
-    }
+function debounce(func, wait = 20, immediate = true) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
   };
-  const streamUrl = `https://api.twitch.tv/helix/users?${usersId}`;
-  const requestUser = new Request(encodeURI(streamUrl), requestOptions);
-  const listsOfUsers = await fetch(requestUser);
+};
 
-  return listsOfUsers.json();
-}
-
-async function getStreams() {
+async function getStreams(nextPageStr='') {
+  isLoading = true;
   const requestOptions = {
     method: "GET",
     headers: {
@@ -30,11 +31,19 @@ async function getStreams() {
     }
   };
   const streamUrl =
-    "https://api.twitch.tv/helix/streams?game_id=21779&language=en";
+    `https://api.twitch.tv/helix/streams?game_id=21779&language=en&after=${nextPageStr}`;
   const requestStream = new Request(encodeURI(streamUrl), requestOptions);
   const lists = [];
-  const listsOfStreams = await fetch(requestStream);
+  let listsOfStreams;
+  try {
+    listsOfStreams = await fetch(requestStream);
+  } catch(err) {
+    console.err('fetch failed', err);
+    // return;
+  }
   const streams = await listsOfStreams.json();
+  // store pagination
+  nextPageEncode = streams.pagination.cursor;
 
   const idLists = streams.data.map(stream => {
     return `id=${stream.user_id}`;
@@ -58,16 +67,29 @@ async function getStreams() {
     );
     lists.push(tmp);
   });
-  return lists;
+  return {data: lists, page: streams.pagination};
 }
 
-function toggleImg(that) {
-  that.style.opacity = 1;
-  that.parentNode.classList.toggle("hide");
+async function getUsersInfo(usersId) {
+  if (usersId.length < 1) {
+    return;
+  }
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Client-ID": "1pad2r1f4sf4viku4n5ss733prh1sm",
+      "Content-Type": "application/json"
+    }
+  };
+  const streamUrl = `https://api.twitch.tv/helix/users?${usersId}`;
+  const requestUser = new Request(encodeURI(streamUrl), requestOptions);
+  const listsOfUsers = await fetch(requestUser);
+
+  return listsOfUsers.json();
 }
 
 function handleRequest(response) {
-  response.forEach(stream => {
+  response.data.forEach(stream => {
     const innerHTML = 
     `
     <div class="element">
@@ -87,7 +109,30 @@ function handleRequest(response) {
     `;
     container.insertAdjacentHTML('beforeend', innerHTML); 
   });
-  container.insertAdjacentHTML('beforeend','<div class="element padding"></div>');
+  isLoading = false;
+  
 }
 
+function onScroll() {
+  let scrollY =
+      window.scrollY ||
+      window.pageYOffset ||
+      document.body.scrollTop;
+  if(window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
+    // prevent multiple requests while loading...    
+    if(!isLoading) {
+      getStreams(nextPageEncode).then(handleRequest);
+    }
+  }
+}
+
+function toggleImg(that) {
+  that.style.opacity = 1;
+  that.parentNode.classList.toggle("hide");
+}
+
+// first load
 getStreams().then(handleRequest);
+
+// load more 
+window.addEventListener('scroll', _.debounce(onScroll, 500));
