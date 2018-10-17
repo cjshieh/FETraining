@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="spinner.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="spinner">
+      <div class="lds-facebook">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <h1 class="lds-facebook-title">Loading LOL live streams.....</h1>
+    </div>
+    <div class="menu">
+      <h1>用中文直播的頻道</h1>
+      <div class="category">
+        <a onclick="changeLang('zh-tw')">中文</a>
+        <a onclick="changeLang('en')">English</a>
+      </div>
+    </div>
+    <div class="elements-grid">
+      
+    </div>
+  </div>
+  <script src="lang-en.js"></script>
+  <script src="lang-zh-tw.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+  <script src="loader.js"></script>
+</body>
+
+</html>
