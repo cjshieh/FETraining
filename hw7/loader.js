@@ -1,6 +1,8 @@
 // console.log("Hello World");
 
 const container = document.querySelector(".elements-grid");
+const menu = document.querySelector(".menu");
+const spinner = document.querySelector(".spinner");
 const thumbnailSize = "620x310";
 let nextPageEncode = '';
 let isLoading = false;
@@ -93,6 +95,8 @@ function handleRequest(response) {
     `;
     container.insertAdjacentHTML('beforeend', innerHTML); 
   });
+  menu.style.display = 'flex';
+  spinner.style.display = "none";
   isLoading = false;
   
 }

@@ -19,18 +19,39 @@ body
   background-attachment: fixed;
   background: url(bg-default.jpg);
 
-
 .container
-  height: auto;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  // flex-direction: column;
   background-color: rgba(0, 0, 0, 0.5);
 
+.menu
+  margin-top: 5vh;
+  height: 10vh;
+  color: white;
+  flex: 1 100%;
+  display: none;
+  // flex-flow: col wrap;
+  flex-direction: column
+  justify-content: space-between;
+  align-items: center;
+
+  h1
+    flex: 1 100%;
+  a
+    flex: 2;
+    font-size: 16px;
+    margin-right: 5px;
+    cursor: pointer;
 
 .elements-grid 
   width: $elements-grid-width;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 
 
