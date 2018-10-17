@@ -4,10 +4,26 @@ const container = document.querySelector(".elements-grid");
 const menu = document.querySelector(".menu");
 const spinner = document.querySelector(".spinner");
 const thumbnailSize = "620x310";
-let nextPageEncode = '';
+let nextPageEncode = "";
 let isLoading = false;
+let LANG = "zh-tw";
 
-async function getStreams(nextPageStr='') {
+function changeLang(lang) {
+  const header = document.querySelector(".menu h1");
+  header.textContent = window.I18N[lang]["TITLE"];
+  LANG = lang;
+  container.innerHTML = `
+  <div id="spinner-content">
+    <div class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>`;
+  getStreams().then(handleRequest);
+}
+
+async function getStreams(nextPageStr = "") {
   isLoading = true;
   const requestOptions = {
     method: "GET",
@@ -16,15 +32,14 @@ async function getStreams(nextPageStr='') {
       "Content-Type": "application/json"
     }
   };
-  const streamUrl =
-    `https://api.twitch.tv/helix/streams?game_id=21779&language=en&after=${nextPageStr}`;
+  const streamUrl = `https://api.twitch.tv/helix/streams?game_id=21779&language=${LANG}&after=${nextPageStr}`;
   const requestStream = new Request(encodeURI(streamUrl), requestOptions);
   const lists = [];
   let listsOfStreams;
   try {
     listsOfStreams = await fetch(requestStream);
-  } catch(err) {
-    console.err('fetch failed', err);
+  } catch (err) {
+    console.err("fetch failed", err);
     // return;
   }
   const streams = await listsOfStreams.json();
@@ -53,7 +68,7 @@ async function getStreams(nextPageStr='') {
     );
     lists.push(tmp);
   });
-  return {data: lists, page: streams.pagination};
+  return { data: lists, page: streams.pagination };
 }
 
 async function getUsersInfo(usersId) {
@@ -76,11 +91,12 @@ async function getUsersInfo(usersId) {
 
 function handleRequest(response) {
   response.data.forEach(stream => {
-    const innerHTML = 
-    `
+    const innerHTML = `
     <div class="element">
       <div class="upper">
-        <img id="channel" src=${stream.thumbnail} alt="" onload="this.style.opacity=1"/>
+        <img id="channel" src=${
+          stream.thumbnail
+        } alt="" onload="this.style.opacity=1"/>
       </div>
       <div class="down">
         <div class="avtar">
@@ -93,22 +109,21 @@ function handleRequest(response) {
       </div>
     </div>
     `;
-    container.insertAdjacentHTML('beforeend', innerHTML); 
+    container.insertAdjacentHTML("beforeend", innerHTML);
   });
-  menu.style.display = 'flex';
+  menu.style.display = "flex";
   spinner.style.display = "none";
+  const spinnerContent = document.querySelector("#spinner-content");
+  if(spinnerContent)
+    spinnerContent.style.display='none'
   isLoading = false;
-  
 }
 
 function onScroll() {
-  let scrollY =
-      window.scrollY ||
-      window.pageYOffset ||
-      document.body.scrollTop;
-  if(window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
-    // prevent multiple requests while loading...    
-    if(!isLoading) {
+  let scrollY = window.scrollY || window.pageYOffset || document.body.scrollTop;
+  if (window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
+    // prevent multiple requests while loading...
+    if (!isLoading) {
       getStreams(nextPageEncode).then(handleRequest);
     }
   }
@@ -122,5 +137,5 @@ function toggleImg(that) {
 // first load
 getStreams().then(handleRequest);
 
-// load more 
-window.addEventListener('scroll', _.debounce(onScroll, 500));
+// load more
+window.addEventListener("scroll", _.debounce(onScroll, 500));

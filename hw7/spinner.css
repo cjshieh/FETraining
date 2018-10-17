@@ -41,6 +41,13 @@
     flex-direction: row;
 }
 
+#spinner-content {
+  /* display: none; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .lds-facebook-title {
     margin-top: 15px;
     color: white;

@@ -21,7 +21,6 @@ body {
   margin-top: 5vh;
   height: 10vh;
   color: #fff;
-  flex: 1 100%;
   display: none;
   flex-direction: column;
   justify-content: space-between;
@@ -38,6 +37,7 @@ body {
 }
 .elements-grid {
   width: 1200px;
+  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
