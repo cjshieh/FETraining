@@ -4,22 +4,6 @@ const container = document.querySelector(".elements-grid");
 const thumbnailSize = "620x310";
 let nextPageEncode = '';
 let isLoading = false;
-let curStreams = 0;
-
-function debounce(func, wait = 20, immediate = true) {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-};
 
 async function getStreams(nextPageStr='') {
   isLoading = true;
