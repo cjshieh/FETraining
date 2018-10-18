@@ -1,2 +1,4 @@
 # Additional Information
 others/
+# Ignore node_modules
+node_modules/
