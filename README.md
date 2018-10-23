@@ -8,3 +8,7 @@
 This is a learing note to record my practice.
 
 Each week of notes is in each folders.
+
+## Final page
+![Imgur](https://i.imgur.com/SVSxm5F.jpg)
+![Imgur](https://i.imgur.com/Omdd3IO.jpg)
